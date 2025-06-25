@@ -16,7 +16,6 @@ $routes = [
 
     '/order' => 'app/controllers/user/order.php',
 
-
     '/user' => 'app/controllers/auth.php',
     '/user/checkout' => 'app/controllers/user/checkout.php',
     '/user/cart' => 'app/controllers/user/cart.php',
@@ -24,36 +23,45 @@ $routes = [
     '/signup' => 'app/controllers/auth.php',
     '/logout' => 'app/controllers/auth.php',
     '/profile' => 'app/controllers/auth.php',
-
-
-
 ];
+
 function routeToController($uri, $routes)
 {
+    // Check for exact route match
     if (isset($routes[$uri])) {
         require $routes[$uri];
         return;
     }
-    //var_dump($uri);
-    //remove the last part of the uri
+
+    // Try to match a parent route
     $uriParts = explode('/', $uri);
     if (count($uriParts) > 1) {
         $lastPart = array_pop($uriParts);
-        $uri = implode('/', $uriParts);
-        if (isset($routes[$uri])) {
-            require $routes[$uri];
+        $parentUri = implode('/', $uriParts);
+        if (isset($routes[$parentUri])) {
+            require $routes[$parentUri];
             return;
         }
     }
-    var_dump($uri);
 
+    // No route found, abort with 404
+    abort(404);
 }
 
 function abort($code = 404)
 {
     http_response_code($code);
 
-    require "app/views/{$code}.php";
+    // Check if the view file exists
+    $errorView = "app/views/{$code}.php";
+    if (file_exists($errorView)) {
+        require $errorView;
+    } else {
+        // Fallback for missing error view
+        echo "<h1>Error {$code}</h1>";
+        echo "<p>The page you requested could not be found.</p>";
+        echo "<p><a href='/'>Return to home page</a></p>";
+    }
 
     die();
 }
