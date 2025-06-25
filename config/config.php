@@ -8,6 +8,6 @@ return [
         'charset' => 'utf8mb4'
     ],
     'uploads'=> [
-        'path'=> 'data/uploads/',
+        'path'=> 'public/uploads/',
     ]
 ];

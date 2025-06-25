@@ -128,10 +128,10 @@
 <script>
   // Load JSON data from PHP
   <?php
-  $divisionData = json_decode(file_get_contents('data/json/divisions.json'), true);
-  $districtData = json_decode(file_get_contents('data/json/districts.json'), true);
-  $upazilaData = json_decode(file_get_contents('data/json/upazilas.json'), true);
-  $postalCodeData = json_decode(file_get_contents('data/json/postcodes.json'), true);
+  $divisionData = json_decode(file_get_contents('public/json/divisions.json'), true);
+  $districtData = json_decode(file_get_contents('public/json/districts.json'), true);
+  $upazilaData = json_decode(file_get_contents('public/json/upazilas.json'), true);
+  $postalCodeData = json_decode(file_get_contents('public/json/postcodes.json'), true);
 
   echo "const divisionData = " . json_encode($divisionData) . ";\n";
   echo "const districtData = " . json_encode($districtData) . ";\n";

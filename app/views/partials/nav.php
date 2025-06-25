@@ -4,7 +4,7 @@
 
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <img class="h-8 w-8" src="../../data/uploads/images/logo.svg" alt="Your Company">
+                    <img class="h-8 w-8" src="../../public/uploads/images/logo.svg" alt="Your Company">
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
