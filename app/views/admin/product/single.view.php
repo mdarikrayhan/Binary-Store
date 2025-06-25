@@ -36,13 +36,17 @@
             Perfect for everyday wear.</p>
         </div>
 
-        <!-- Add to Cart Button -->
-        <form class="pt-4">
-          <button type="submit"
-            class="w-full bg-indigo-600 text-white py-3 px-6 rounded-md hover:bg-indigo-700 transition-colors duration-200">
-            Add to Cart
-          </button>
-        </form>
+        <!-- Admin Actions -->
+        <div class="pt-4 flex space-x-4">
+          <a href="/admin/product?action=update&id=<?= $_GET['id'] ?>"
+            class="flex-1 bg-indigo-600 text-white py-3 px-6 rounded-md hover:bg-indigo-700 transition-colors duration-200 text-center">
+            Update Product
+          </a>
+          <a href="/admin/product?action=delete&id=<?= $_GET['id'] ?>" onclick="return confirm('Are you sure you want to delete this product?')"
+            class="flex-1 bg-red-600 text-white py-3 px-6 rounded-md hover:bg-red-700 transition-colors duration-200 text-center">
+            Delete Product
+          </a>
+        </div>
       </div>
     </div>
 

@@ -49,4 +49,28 @@ class Product
         $params = [':category_id' => $categoryId];
         return $db->query($query, $params)->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function updateProduct($id, $name, $description, $imageUrl, $price, $quantity, $categoryId)
+    {
+        global $db;
+        $query = "UPDATE products SET name = :name, description = :description, image_url = :image_url, price = :price, quantity = :quantity, category_id = :category_id WHERE id = :id";
+        $params = [
+            ':id' => $id,
+            ':name' => $name,
+            ':description' => $description,
+            ':image_url' => $imageUrl,
+            ':price' => $price,
+            ':quantity' => $quantity,
+            ':category_id' => $categoryId
+        ];
+        return $db->query($query, $params);
+    }
+
+    public function deleteProduct($id)
+    {
+        global $db;
+        $query = "DELETE FROM products WHERE id = :id";
+        $params = [':id' => $id];
+        return $db->query($query, $params);
+    }
 }

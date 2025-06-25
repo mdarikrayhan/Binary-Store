@@ -40,4 +40,25 @@ class Category
         ];
         return $db->query($query, $params);
     }
+
+    public function updateCategory($id, $name, $description, $image_url)
+    {
+        global $db;
+        $query = "UPDATE categories SET name = :name, description = :description, image_url = :image_url WHERE id = :id";
+        $params = [
+            ':id' => $id,
+            ':name' => $name,
+            ':description' => $description,
+            ':image_url' => $image_url
+        ];
+        return $db->query($query, $params);
+    }
+
+    public function deleteCategory($id)
+    {
+        global $db;
+        $query = "DELETE FROM categories WHERE id = :id";
+        $params = [':id' => $id];
+        return $db->query($query, $params);
+    }
 }

@@ -52,6 +52,10 @@
                 <span class="sr-only">,</span>
                 <p class="ml-2 text-sm text-gray-500">${product.description}</p>
             </div>
+            <div class="mt-2 flex justify-center space-x-2">
+                <a href="/admin/product?action=update&id=${product.id}" class="text-xs bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700">Update</a>
+                <a href="/admin/product?action=delete&id=${product.id}" onclick="return confirm('Are you sure you want to delete this product?')" class="text-xs bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete</a>
+            </div>
         `;
         productContainer.appendChild(productDiv);
     });

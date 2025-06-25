@@ -24,6 +24,10 @@ $userOrders = (new Order())->getAllOrders();
                                                 <p class="text-gray-500 text-sm mt-2">Ordered on:
                                                     <?= date('Y-m-d H:i:s', strtotime($order['created_at'])) ?>
                                                 </p>
+                                                <div class="mt-4 flex space-x-2">
+                                                    <a href="/admin/order?action=update&id=<?= $order['id'] ?>" class="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 text-sm">Update Status</a>
+                                                    <a href="/admin/order?action=delete&id=<?= $order['id'] ?>" onclick="return confirm('Are you sure you want to delete this order?')" class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 text-sm">Delete</a>
+                                                </div>
                                             </div>
                             <?php endforeach; ?>
                         </div>

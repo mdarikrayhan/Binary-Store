@@ -48,9 +48,13 @@
             <img src="../${category.image_url}" alt="${category.name}"
                 class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80" />
             <div class="mt-4 flex justify-center">
-                <a href="#" class="text-sm font-semibold text-gray-900">${category.name}</a>
+                <a href="/admin/category?action=view&id=${category.id}" class="text-sm font-semibold text-gray-900">${category.name}</a>
                 <span class="sr-only">,</span>
                 <p class="ml-2 text-sm text-gray-500">${category.description}</p>
+            </div>
+            <div class="mt-2 flex justify-center space-x-2">
+                <a href="/admin/category?action=update&id=${category.id}" class="text-xs bg-indigo-600 text-white px-2 py-1 rounded hover:bg-indigo-700">Update</a>
+                <a href="/admin/category?action=delete&id=${category.id}" onclick="return confirm('Are you sure you want to delete this category?')" class="text-xs bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700">Delete</a>
             </div>
         `;
         categoryContainer.appendChild(categoryDiv);

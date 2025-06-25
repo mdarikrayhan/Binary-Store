@@ -49,4 +49,23 @@ class Order
         $params = [':id' => $id];
         return $db->query($query, $params)->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function updateOrderStatus($id, $order_status)
+    {
+        global $db;
+        $query = "UPDATE orders SET order_status = :order_status WHERE id = :id";
+        $params = [
+            ':id' => $id,
+            ':order_status' => $order_status
+        ];
+        return $db->query($query, $params);
+    }
+
+    public function deleteOrder($id)
+    {
+        global $db;
+        $query = "DELETE FROM orders WHERE id = :id";
+        $params = [':id' => $id];
+        return $db->query($query, $params);
+    }
 }
