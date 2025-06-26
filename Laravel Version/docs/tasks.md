@@ -4,14 +4,14 @@ This document contains a prioritized list of tasks to improve the Binary Store a
 
 ## Architecture and Structure
 
-1. [ ] Resolve architectural inconsistency by completing migration to Laravel framework
-   - [ ] Remove legacy controllers in `app/controllers/` directory
-   - [ ] Remove legacy models in `app/models/` with `.model.php` extension
-   - [ ] Ensure all routes are defined in Laravel's routing system
+1. [x] Resolve architectural inconsistency by completing migration to Laravel framework
+   - [x] Remove legacy controllers in `app/controllers/` directory
+   - [x] Remove legacy models in `app/models/` with `.model.php` extension
+   - [x] Ensure all routes are defined in Laravel's routing system
 
-2. [ ] Standardize naming conventions across the codebase
-   - [ ] Use consistent capitalization for filenames (e.g., all models should be PascalCase)
-   - [ ] Ensure controller method names follow Laravel conventions
+2. [x] Standardize naming conventions across the codebase
+   - [x] Use consistent capitalization for filenames (e.g., all models should be PascalCase)
+   - [x] Ensure controller method names follow Laravel conventions
 
 3. [ ] Implement proper dependency injection instead of using global variables
    - [ ] Replace `global $db` usage with Laravel's database facade or dependency injection

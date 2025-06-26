@@ -60,11 +60,10 @@
                     <select name="category" id="category"
                         class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
                         <?php
-                        global $db;
-                        $query = "SELECT * FROM categories";
-                        $categories = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
+                        use Illuminate\Support\Facades\DB;
+                        $categories = DB::table('categories')->get();
                         foreach ($categories as $category) {
-                            echo "<option value='{$category['id']}'>{$category['name']}</option>";
+                            echo "<option value='{$category->id}'>{$category->name}</option>";
                         }
                         ?>
                     </select>
