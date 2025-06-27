@@ -4,7 +4,7 @@
 
 <?php
 // Get category data
-use Illuminate\Support\Facades\DB;
+global $db;
 $id = $_GET['id'] ?? null;
 
 if (!$id) {
@@ -12,7 +12,9 @@ if (!$id) {
     exit;
 }
 
-$category = DB::table('categories')->where('id', $id)->first();
+$query = "SELECT * FROM categories WHERE id = :id";
+$params = [':id' => $id];
+$category = $db->query($query, $params)->fetch(PDO::FETCH_ASSOC);
 
 if (!$category) {
     header("Location: /admin/category");

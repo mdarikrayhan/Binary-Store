@@ -34,8 +34,9 @@
 
 <script>
     <?php
-    use Illuminate\Support\Facades\DB;
-    $result = DB::table('categories')->get();
+    global $db;
+    $query = "SELECT * FROM categories";
+    $result = $db->query($query)->fetchAll(PDO::FETCH_ASSOC);
     ?>
     const categories = <?php echo json_encode($result); ?>;
     console.log(categories);

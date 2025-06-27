@@ -44,11 +44,13 @@
 
 <script>
   <?php
-  use Illuminate\Support\Facades\DB;
+  global $db;
   $id = $_GET['id'] ?? null;
 
   if (isset($_GET['id'])) {
-    $category = DB::table('categories')->where('id', $id)->first();
+    $query = "SELECT * FROM categories WHERE id = :id";
+    $params = [':id' => $id];
+    $category = $db->query($query, $params)->fetch(PDO::FETCH_ASSOC);
     if (!$category) {
       echo "console.error('Category not found');";
       return;
