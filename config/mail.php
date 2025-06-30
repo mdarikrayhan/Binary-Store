@@ -1,85 +1,118 @@
 <?php
-$to_email = "jehil12829@ofacer.com";
-$subject = "Test Email from Raw PHP";
-$body = "Hello,\nThis is a test email sent via Gmail SMTP using raw PHP.";
-$from_email = "mdarikrayhan@gmail.com";
-$app_password = "aeezmayolqnnzvyc"; // Gmail App Password
 
-// Connect via SSL
-$hostname = 'ssl://smtp.gmail.com';
-$port = 465;
-$timeout = 30;
+return [
 
-$socket = stream_socket_client("$hostname:$port", $errno, $errstr, $timeout);
-if (!$socket) {
-    die("Connection failed: $errno - $errstr\n");
-} else {
-    echo "Connected to $hostname on port $port\n";
-}
+    /*
+    |--------------------------------------------------------------------------
+    | Default Mailer
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the default mailer that is used to send all email
+    | messages unless another mailer is explicitly specified when sending
+    | the message. All additional mailers can be configured within the
+    | "mailers" array. Examples of each type of mailer are provided.
+    |
+    */
 
-function send_cmd($socket, $cmd, $debug = false)
-{
-    fwrite($socket, $cmd . "\r\n");
-    $response = '';
-    while ($line = fgets($socket, 512)) {
-        $response .= $line;
-        if (preg_match('/^\d{3} /', $line))
-            break;
-    }
-    if ($debug)
-        echo "C: $cmd\nS: $response\n";
-    return $response;
-}   
+    'default' => env('MAIL_MAILER', 'log'),
 
-// Read server greeting
-fgets($socket);
+    /*
+    |--------------------------------------------------------------------------
+    | Mailer Configurations
+    |--------------------------------------------------------------------------
+    |
+    | Here you may configure all of the mailers used by your application plus
+    | their respective settings. Several examples have been configured for
+    | you and you are free to add your own as your application requires.
+    |
+    | Laravel supports a variety of mail "transport" drivers that can be used
+    | when delivering an email. You may specify which one you're using for
+    | your mailers below. You may also add additional mailers if needed.
+    |
+    | Supported: "smtp", "sendmail", "mailgun", "ses", "ses-v2",
+    |            "postmark", "resend", "log", "array",
+    |            "failover", "roundrobin"
+    |
+    */
 
-// Say EHLO
-send_cmd($socket, "EHLO localhost", true);
+    'mailers' => [
 
-// Authenticate
-send_cmd($socket, "AUTH LOGIN", true);
-send_cmd($socket, base64_encode($from_email), true);
-send_cmd($socket, base64_encode($app_password), true);
+        'smtp' => [
+            'transport' => 'smtp',
+            'scheme' => env('MAIL_SCHEME'),
+            'url' => env('MAIL_URL'),
+            'host' => env('MAIL_HOST', '127.0.0.1'),
+            'port' => env('MAIL_PORT', 2525),
+            'username' => env('MAIL_USERNAME'),
+            'password' => env('MAIL_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+        ],
 
-// Send mail
-send_cmd($socket, "MAIL FROM:<$from_email>", true);
-send_cmd($socket, "RCPT TO:<$to_email>", true);
-send_cmd($socket, "DATA", true);
+        'ses' => [
+            'transport' => 'ses',
+        ],
 
-// Construct message
-$message = "To: $to_email\r\n";
-$message .= "From: $from_email\r\n";
-$message .= "Subject: $subject\r\n";
-$message .= "Content-Type: text/plain; charset=UTF-8\r\n";
-$message .= "\r\n";
-$message .= $body;
+        'postmark' => [
+            'transport' => 'postmark',
+            // 'message_stream_id' => env('POSTMARK_MESSAGE_STREAM_ID'),
+            // 'client' => [
+            //     'timeout' => 5,
+            // ],
+        ],
 
-// End message with a dot on a line
-send_cmd($socket, $message . "\r\n.", true);
+        'resend' => [
+            'transport' => 'resend',
+        ],
 
-// Quit
-send_cmd($socket, "QUIT", true);
+        'sendmail' => [
+            'transport' => 'sendmail',
+            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+        ],
 
-fclose($socket);
+        'log' => [
+            'transport' => 'log',
+            'channel' => env('MAIL_LOG_CHANNEL'),
+        ],
 
-echo "Email sent successfully.\n";
-?>
+        'array' => [
+            'transport' => 'array',
+        ],
 
+        'failover' => [
+            'transport' => 'failover',
+            'mailers' => [
+                'smtp',
+                'log',
+            ],
+            'retry_after' => 60,
+        ],
 
+        'roundrobin' => [
+            'transport' => 'roundrobin',
+            'mailers' => [
+                'ses',
+                'postmark',
+            ],
+            'retry_after' => 60,
+        ],
 
-<!-- Email Sending using mail function for which postfix and sendmail is needed -->
-<?php
-// $to = 'mdarikrayhan@gmail.com';
-// $subject = 'Test email from PHP on macOS';
-// $message = 'This is a test email using Postfix and Gmail SMTP';
-// $headers = 'From: your_email@gmail.com' . "\r\n" .
-//     'Reply-To: your_email@gmail.com' . "\r\n" .
-//     'X-Mailer: PHP/' . phpversion();
+    ],
 
-// if (mail($to, $subject, $message, $headers)) {
-//     echo 'Email sent successfully.';
-// } else {
-//     echo 'Failed to send email.';
-// }
-?>
+    /*
+    |--------------------------------------------------------------------------
+    | Global "From" Address
+    |--------------------------------------------------------------------------
+    |
+    | You may wish for all emails sent by your application to be sent from
+    | the same address. Here you may specify a name and address that is
+    | used globally for all emails that are sent by your application.
+    |
+    */
+
+    'from' => [
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('MAIL_FROM_NAME', 'Example'),
+    ],
+
+];
