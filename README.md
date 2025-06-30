@@ -418,13 +418,12 @@ This project is open-sourced software licensed under the [MIT license](LICENSE).
 
 **Md Arik Rayhan**
 - Email: mdarikrayhan@gmail.com
-- GitHub: [@your-github-username]
+- GitHub: [@mdarikrayhan]
 
 ## 🙏 **Acknowledgments**
 
 - Laravel Framework for the excellent foundation
 - Tailwind CSS for the beautiful design system
-- The original custom PHP implementation that inspired this Laravel version
 - Bangladesh government for the geographic data
 
 ---
