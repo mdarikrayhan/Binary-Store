@@ -88,6 +88,13 @@ class User
         return $db->query($query, $params)->fetchColumn() > 0;
     }
 
+    public function isFirstUser()
+    {
+        global $db;
+        $query = "SELECT COUNT(*) FROM users";
+        return $db->query($query)->fetchColumn() === 0; // Returns true if no users exist
+    }
+
     /**
      * Save a new user to the database
      * 
@@ -105,6 +112,12 @@ class User
     public function save($first_name, $last_name, $email, $password, $phone, $division, $district, $upazila, $zipcode)
     {
         global $db;
+        //if the user is first user then set role to admin
+        if ($this->isFirstUser()) {
+           $role = 'admin'; // Set role to admin for the first user
+        } else {
+            $role = 'user'; // Default role for other users
+        }
 
         // Sanitize inputs
         $first_name = sanitizeInput($first_name);
@@ -121,9 +134,10 @@ class User
             return false;
         }
 
-        $query = "INSERT INTO users (email, password, first_name, last_name, phone, division, district, upazila, zipcode, created_at) 
-                  VALUES (:email, :password, :first_name, :last_name, :phone, :division, :district, :upazila, :zipcode, NOW())";
+        $query = "INSERT INTO users (role,email, password, first_name, last_name, phone, division, district, upazila, zipcode, created_at) 
+                  VALUES (:role,:email, :password, :first_name, :last_name, :phone, :division, :district, :upazila, :zipcode, NOW())";
         $params = [
+            ':role' => $role,
             ':email' => $email,
             ':password' => password_hash($password, PASSWORD_DEFAULT),
             ':first_name' => $first_name,
