@@ -59,3 +59,5 @@ Route::get('/order', [UserOrderController::class, 'index']);
 
 // Legacy checkout routes
 // Route::post('/user/checkout', [CheckoutController::class, 'store'])->name('user.checkout.store');
+
+URL::forceScheme('https');
